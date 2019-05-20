@@ -190,10 +190,13 @@ sub execute_notifier {
     duration => ($job->end_time > $job->start_time) ? $job->end_time - $job->start_time : 0,
   );
 
-  $notifier->short_message("Job ".$job->name." has exited with state '$state'");
+  $notifier->short_message("Job ".$job->name." (".$job->id.") has exited with state '$state'");
   my $result;
+  # FIXME
+  my $thisserver = "kanku.suse.de";
   try {
-    $result = decode_json($task->result)->{error_message} 
+    $result = 'https://'.$thisserver.'/kanku/job_result/'.$job->id.'\n';
+    $result .= decode_json($task->result)->{error_message} 
               || 'No errors found in task result';
   } catch {
     $result = 'Error while decoding result of task from job '.

@@ -75,6 +75,7 @@ sub notify {
   }
   my $nsca             = Net::NSCA::Client->new(%iopts);
   my $msg              = ($self->short_message || 'Got no message')."|duration=".$self->duration."s";
+  $msg .= "\n".$self->full_message."\n" if $self->full_message;
   $nsca->send_report(
     %{$cfg->{$pkg}->{send_report} ||{}},
     %{$self->options->{send_report}},
