@@ -80,9 +80,9 @@ sub notify {
   if($self->state eq 'succeed') {
     $nstat = $Net::NSCA::Client::STATUS_OK;
   } elsif ($self->state eq 'failed') {
-    $nstat = $Net::NSCA::Client::STATUS_CRITICAL;
-  } else {
     $nstat = $Net::NSCA::Client::STATUS_WARNING;
+  } else {
+    $nstat = $Net::NSCA::Client::STATUS_UNKNOWN;
   }
 
   $self->logger->debug("Sending report (status: $nstat  with message: ".$self->short_message);
